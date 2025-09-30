@@ -1,10 +1,9 @@
 ﻿#pragma once
-#include <string>
 #include <vector>
+#include <string>
 
 class Calculator {
 public:
-    // obliczanie wyniku z ONP
-    static int evaluateONP(const std::vector<std::string>& tokens);
+    // Change return type from int to double
+    static double evaluateONP(const std::vector<std::string>& tokens);
 };
-

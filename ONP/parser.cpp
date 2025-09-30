@@ -6,6 +6,7 @@
 int precedence(char op) {
     if (op == '+' || op == '-') return 1;
     if (op == '*' || op == '/') return 2;
+    //if (op == 'N' || op == 'X') return 3;
     return 0;
 }
 
@@ -20,10 +21,15 @@ std::vector<std::string> Parser::infixToONP(const std::string& expr) {
     for (size_t i = 0; i < expr.size(); ++i) {
         char c = expr[i];
 
-        if (isdigit(c)) {
+        // Modified to handle floating-point numbers
+        if (isdigit(c) || c == '.') {
             std::string number;
-            while (i < expr.size() && isdigit(expr[i]))
+            bool hasDot = false;
+
+            while (i < expr.size() && (isdigit(expr[i]) || (expr[i] == '.' && !hasDot))) {
+                if (expr[i] == '.') hasDot = true;
                 number += expr[i++];
+            }
             --i;
             output.push_back(number);
         }
@@ -35,40 +41,52 @@ std::vector<std::string> Parser::infixToONP(const std::string& expr) {
                 output.push_back(std::string(1, opStack.top()));
                 opStack.pop();
             }
-            if (!opStack.empty()) opStack.pop(); //popujemy nawias
-        }
-        else if (c == '+' || c == '-' || c == '*' || c == '/') {
-            while (!opStack.empty() && precedence(opStack.top()) >= precedence(c)) { //popujemy az dojdziemy do operatora o wyzszym priorytecie (* or /)
+            if (!opStack.empty()) opStack.pop();
+
+            int temp;
+            if (!opStack.empty()) { //we want to check if there is a func in front of the '(', we have to pop the arg count
+                temp = opStack.top();
+                opStack.pop();
+            }
+            //if there is a func in front of the '(' then add the func operand and argcount
+            if (!opStack.empty() && (opStack.top() == 'X' || opStack.top() == 'N')) {
+                opStack.push(temp); //we bring back the argcount now that we have checked the func
+                output.push_back(std::string(1, opStack.top()));
+                opStack.pop();
                 output.push_back(std::string(1, opStack.top()));
                 opStack.pop();
             }
-            opStack.push(c); //pushujemy operator normalnie
         }
-        else if (c == 'X' || c == 'N') { // X to max, N to min
-            size_t j = i+2; // j to iterator, musimy sprawdzic ile argumentow przyjmie max lub min
-            //i+2 bo w tej chwili expr[i] to X lub N, kolejne expr to '(' i dopiero expr[i+2] jest warty uwagi
-            int bracket_counter = 1; // to counter nawiasow, '(' to +, ')' to -, jak dojdzie do 0 to sie konczy wyrazenie max albo min, zaczynamy od 1 bo pominelismy pierwszy nawias otwierający
-            int argument_count = 1; //na podstawie liczby przecinkow po zakończeniu wyrazenia okreslamy liczbe argumentow, arg count = comma count + 1 dlatego zaczynamy od 1
+        else if (c == '+' || c == '-' || c == '*' || c == '/') {
+            while (!opStack.empty() && precedence(opStack.top()) >= precedence(c)) {
+                output.push_back(std::string(1, opStack.top()));
+                opStack.pop();
+            }
+            opStack.push(c);
+        }
+        else if (c == 'X' || c == 'N') {
+            size_t j = i + 2; //skip func operand and '('
+            int bracket_counter = 1; //we keep track of '(' level, '('++, ')'--, we can only count ',' when the level is 1, we dont want to count ',' inside another functions in the function
+            int argument_count = 1; //we count arguments based on ',', arg count = ',' count + 1
             while (j < expr.size() && bracket_counter != 0) {
                 char ch = expr[j];
                 if (ch == '(') bracket_counter++;
                 else if (ch == ')') bracket_counter--;
-                else if (ch == ',' && bracket_counter == 1) //1 nawias bo w nawiasie moze byc kolejna funkcja min lub max i nie chcemy liczyc nawiasow z niej
+                else if (ch == ',' && bracket_counter == 1)
                     argument_count++;
                 j++;
             }
             opStack.push(c);
             opStack.push(argument_count);
-            
         }
-        else if (c == ',') { //popujemy az dojdziemy do nawiasu ktory zaczyna argumenty funkcji
+        else if (c == ',') {
             while (!opStack.empty() && opStack.top() != '(') {
                 output.push_back(std::string(1, opStack.top()));
                 opStack.pop();
             }
         }
-
     }
+
     while (!opStack.empty()) {
         output.push_back(std::string(1, opStack.top()));
         opStack.pop();
