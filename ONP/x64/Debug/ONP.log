@@ -1,4 +1,5 @@
 ﻿  calculator.cpp
   main.cpp
+  parser.cpp
   Generowanie kodu...
-  ONP.vcxproj -> C:\Users\macie\Desktop\ONP\x64\Debug\ONP.exe
+  ONP.vcxproj -> D:\Repos\InfixToONP\x64\Debug\ONP.exe
