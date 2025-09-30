@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Repos\\InfixToONP\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{63E24B29-083A-4C79-998D-7B07FFE2FBD4}|ONP\\ONP.vcxproj|D:\\Repos\\InfixToONP\\ONP\\parser.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{63E24B29-083A-4C79-998D-7B07FFE2FBD4}|ONP\\ONP.vcxproj|solutionrelative:ONP\\parser.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{63E24B29-083A-4C79-998D-7B07FFE2FBD4}|ONP\\ONP.vcxproj|D:\\Repos\\InfixToONP\\ONP\\calculator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{63E24B29-083A-4C79-998D-7B07FFE2FBD4}|ONP\\ONP.vcxproj|solutionrelative:ONP\\calculator.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
@@ -23,12 +27,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "parser.cpp",
+              "DocumentMoniker": "D:\\Repos\\InfixToONP\\ONP\\parser.cpp",
+              "RelativeDocumentMoniker": "ONP\\parser.cpp",
+              "ToolTip": "D:\\Repos\\InfixToONP\\ONP\\parser.cpp",
+              "RelativeToolTip": "ONP\\parser.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-09-30T22:11:21.866Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "calculator.cpp",
               "DocumentMoniker": "D:\\Repos\\InfixToONP\\ONP\\calculator.cpp",
               "RelativeDocumentMoniker": "ONP\\calculator.cpp",
               "ToolTip": "D:\\Repos\\InfixToONP\\ONP\\calculator.cpp",
               "RelativeToolTip": "ONP\\calculator.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-30T21:11:10.649Z",
               "EditorCaption": ""

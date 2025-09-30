@@ -1,5 +1,5 @@
 ﻿#include "parser.hpp"
-#include "node.hpp"
+//#include "node.hpp"
 #include <cctype>
 #include <stack>
 
@@ -47,15 +47,19 @@ std::vector<std::string> Parser::infixToONP(const std::string& expr) {
             if (!opStack.empty()) { //we want to check if there is a func in front of the '(', we have to pop the arg count
                 temp = opStack.top();
                 opStack.pop();
+                //if there is a func in front of the '(' then add the func operand and argcount
+                if (!opStack.empty() && (opStack.top() == 'X' || opStack.top() == 'N')) {
+                    opStack.push(temp); //we bring back the argcount now that we have checked the func
+                    output.push_back(std::string(1, opStack.top()));
+                    opStack.pop();
+                    output.push_back(std::string(1, opStack.top()));
+                    opStack.pop();
+                }
+                //if there was no func we bring back the operand in fron of the '('
+                else{ opStack.push(temp); }
             }
-            //if there is a func in front of the '(' then add the func operand and argcount
-            if (!opStack.empty() && (opStack.top() == 'X' || opStack.top() == 'N')) {
-                opStack.push(temp); //we bring back the argcount now that we have checked the func
-                output.push_back(std::string(1, opStack.top()));
-                opStack.pop();
-                output.push_back(std::string(1, opStack.top()));
-                opStack.pop();
-            }
+            
+            
         }
         else if (c == '+' || c == '-' || c == '*' || c == '/') {
             while (!opStack.empty() && precedence(opStack.top()) >= precedence(c)) {
